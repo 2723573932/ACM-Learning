@@ -1,0 +1,1 @@
+{"name":"Local: 完全二叉树的层序遍历","url":"d:\\Codes\\PTA RANK\\完全二叉树的层序遍历.cpp","tests":[{"id":1712231837109,"input":"8\n91 71 2 34 10 15 55 18","output":"18 34 55 71 2 10 15 91"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Codes\\PTA RANK\\完全二叉树的层序遍历.cpp","group":"local","local":true}

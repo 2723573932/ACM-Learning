@@ -1,0 +1,9 @@
+{
+    "C_Cpp.default.compilerPath": "D:\\mingw64\\bin\\g++.exe",
+    "python.analysis.typeCheckingMode": "basic",
+    "files.associations": {
+        "queue": "cpp",
+        "iostream": "cpp"
+    },
+    "editor.fontSize": 24
+}
