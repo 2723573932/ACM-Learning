@@ -1,0 +1,1 @@
+{"name":"Local: Goldbachs Conjecture","url":"d:\\Codes\\ACM程序设计\\Goldbachs Conjecture.cpp","tests":[{"id":1715601289437,"input":"6\n10\n12\n0","output":"1\n2\n1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Codes\\ACM程序设计\\Goldbachs Conjecture.cpp","group":"local","local":true}

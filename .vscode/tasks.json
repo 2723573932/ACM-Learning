@@ -7,12 +7,12 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "'${file}'",
                 "-o",
-                "D:\\Codes\\exe\\debug.exe"
+                "D:\\Codes\\_exe\\debug.exe"
             ],
             "options": {
-                "cwd": "D:\\Codes\\exe"
+                "cwd": "D:\\Codes\\_exe"
             },
             "problemMatcher": [
                 "$gcc"
