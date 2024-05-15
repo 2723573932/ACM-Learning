@@ -29,10 +29,10 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "/workspaces/ACM-Learning/exe/debug"
             ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "/workspaces/ACM-Learning/exe"
             },
             "problemMatcher": [
                 "$gcc"
