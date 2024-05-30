@@ -9,10 +9,10 @@
                 "-g",
                 "'${file}'",
                 "-o",
-                "D:\\Codes\\_exe\\debug.exe"
+                "D:\\Codes\\exe\\debug.exe"
             ],
             "options": {
-                "cwd": "D:\\Codes\\_exe"
+                "cwd": "D:\\Codes\\exe"
             },
             "problemMatcher": [
                 "$gcc"
