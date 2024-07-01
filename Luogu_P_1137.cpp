@@ -1,47 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Edge
+int ans[(int)1e7 + 5];
+vector<vector<int>> G((int)2e7 + 5);
+int getmax(int x)
 {
-    int next, to, w;
-} edge[200007];
-int head[100007], vis[100007], cnt, ans[100007];
-inline void add_edge(int from, int to)
-{
-    edge[++cnt].to = to;
-    edge[cnt].next = head[from];
-    head[from] = cnt;
-    edge[cnt].w = 1;
-    edge[++cnt].to = from;
-    edge[cnt].next = head[to];
-    head[to] = cnt;
-    edge[cnt].w = -1;
-}
-void dfs(int node)
-{
-    if (vis[node])
-        return;
-    vis[node] = 1;
-    for (int i = head[node]; i; i = edge[i].next)
-    {
-        int TO = edge[i].to;
-        ans[TO] = max(ans[node] + edge[i].w,ans[TO]);
-        dfs(TO);
-    }
+    if (ans[x] != 0)
+        return ans[x];
+    int res = 1;
+    for (auto i : G[x])
+        res = max(res, getmax(i) + 1);
+    return ans[x] = res;
 }
 void solve()
 {
     int n, m;
     cin >> n >> m;
-    int x, y;
+    memset(ans, 0, sizeof(ans));
     while (m--)
     {
-        cin >> x >> y;
-        add_edge(x, y);
+        int v, u;
+        cin >> v >> u;
+        G[u].push_back(v);
     }
-    dfs(1);
     for (int i = 1; i <= n; i++)
-        cout << ans[i] - *min_element(ans, ans + n) << '\n';
+    {
+        cout << getmax(i) <<"\n";
+    }
 }
 int main()
 {

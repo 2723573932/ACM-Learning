@@ -39,7 +39,7 @@
             ],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             },
             "detail": "调试器生成的任务。"
         }
