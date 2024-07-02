@@ -2,7 +2,7 @@
 using namespace std;
 
 int ans[(int)1e7 + 5];
-vector<vector<int>> G((int)2e7 + 5);
+map<int,vector<int>> G;
 int getmax(int x)
 {
     if (ans[x] != 0)
