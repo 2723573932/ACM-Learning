@@ -5,11 +5,6 @@
         "queue": "cpp",
         "iostream": "cpp"
     },
-<<<<<<< HEAD
-    "editor.fontSize": 24,
-    "cph.general.saveLocation": "D:\\Codes\\.cphbin"
-=======
-    "editor.fontSize": 15,
+    "editor.fontSize": 20,
     "cph.general.saveLocation": ""
->>>>>>> e4acdb53616e87583cd79b33f0ee7633aa86a062
 }
