@@ -38,6 +38,14 @@ int findMaxSubRectangle(const std::vector<std::vector<int> > &matrix)
 
 int main()
 {
+<<<<<<< HEAD
+    std::vector<std::vector<int>> matrix = {
+        {0, -2, -7, 0},
+        {9, 2, -6, 2},
+        {-4, 1, -4, 1},
+        {-1, 8, 0, -2}};
+
+=======
     int n;
     std::cin>>n;
     std::vector<std::vector<int> > matrix(n, std::vector<int>(n, 0));
@@ -48,6 +56,7 @@ int main()
             std::cin>>matrix[i][j];
         }
     }
+>>>>>>> 8e5db2f36c5bfaef2065ba376a3f7afa481156b0
     int maxSum = findMaxSubRectangle(matrix);
     std::cout << maxSum << std::endl;
 
