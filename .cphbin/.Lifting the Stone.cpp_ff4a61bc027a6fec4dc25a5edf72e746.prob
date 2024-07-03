@@ -1,1 +1,0 @@
-{"name":"Local: Lifting the Stone","url":"d:\\Codes\\ACM程序设计\\Lifting the Stone.cpp","tests":[{"id":1715598772608,"input":"2\n4\n5 0\n0 5\n-5 0\n0 -5\n4\n1 1\n11 1\n11 11\n1 11","output":"0.00 0.00\n6.00 6.00"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Codes\\ACM程序设计\\Lifting the Stone.cpp","group":"local","local":true}

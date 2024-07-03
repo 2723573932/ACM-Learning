@@ -1,1 +1,0 @@
-{"name":"Local: temp","url":"d:\\Codes\\temp.cpp","tests":[{"id":1714909653389,"input":"hangzhou city[i lofe{{-v-} ] universiti=y#","output":"i love hangzhou city university"},{"id":1714911059824,"input":"abcd[c-de#","output":"cdecd"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Codes\\temp.cpp","group":"local","local":true}

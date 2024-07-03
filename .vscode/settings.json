@@ -3,8 +3,13 @@
     "python.analysis.typeCheckingMode": "basic",
     "files.associations": {
         "queue": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp"
     },
     "editor.fontSize": 20,
-    "cph.general.saveLocation": ""
+    "cph.general.saveLocation": "",
+    "cph.general.defaultLanguage": "cpp",
+    "cph.general.firstTime": false,
+    "cph.general.useShortCodeForcesName": true
 }

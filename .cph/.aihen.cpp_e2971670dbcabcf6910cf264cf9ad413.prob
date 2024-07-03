@@ -1,1 +1,0 @@
-{"name":"Local: aihen","url":"d:\\Codes\\aihen.cpp","tests":[{"id":1708666571758,"input":"3\n5 4 2\n1 2 3","output":"5 2 4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Codes\\aihen.cpp","group":"local","local":true}
