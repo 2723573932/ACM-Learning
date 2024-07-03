@@ -1,0 +1,1 @@
+{"name":"Local: Post Office","url":"d:\\Codes\\ACM-Learning\\ACM程序设计\\Post Office.cpp","tests":[{"id":1718628593969,"input":"10 5\n1 2 3 6 7 9 11 22 44 50","output":"9"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Codes\\ACM-Learning\\ACM程序设计\\Post Office.cpp","group":"local","local":true}
