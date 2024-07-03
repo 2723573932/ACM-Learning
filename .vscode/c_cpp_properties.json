@@ -11,8 +11,7 @@
                 "_UNICODE"
             ],
             "cStandard": "gnu23",
-            "cppStandard": "gnu++23",
-            "intelliSenseMode": "windows-gcc-x64"
+            "cppStandard": "gnu++23"
         }
     ],
     "version": 4
