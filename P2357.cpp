@@ -1,62 +1,27 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-long long lst[(int)1e6 + 3];
+class BinaryIndexedTree
+{
+private:
+    vector<int> tree;
+    vector<int> sum1;
+    vector<int> sum2;
+    int n;
+
+public:
+    BinaryIndexedTree(int n) : tree(n + 1), sum1(n + 1), sum2(n + 1),n(n)
+    {
+        for (int i = 1; i <= n; i++)
+        {
+            cin >> tree[i];
+            sum1[i] = sum1[i - 1] + tree[i];
+            sum2[i] = sum2[i - 1] + tree[i] * i;
+        }
+    }
+};
 void solve()
 {
-    long long n, f;
-    cin >> n >> f;
-    for (long long i = 1; i <= n; i++)
-    {
-        cin >> lst[i];
-    }
-    while (f--)
-    {
-        int op;
-        cin >> op;
-        switch (op)
-        {
-        case 1:
-        {
-            long long l, r, k;
-            cin >> l >> r >> k;
-            for (int i = l; i <= r; i++)
-                lst[i] += k;
-            break;
-        }
-        case 2:
-        {
-            long long k;
-            cin >> k;
-            lst[1] += k;
-            break;
-        }
-        case 3:
-        {
-            long long k;
-            cin >> k;
-            lst[1] -= k;
-            break;
-        }
-        case 4:
-        {
-            long long l, r;
-            cin >> l >> r;
-            long long tmp=0;
-            for(int i=l;i<=r;i++)
-            tmp+=lst[i];
-            cout<<tmp<<'\n';
-            break;
-        }
-        case 5:
-        {
-            cout<<lst[1]<<'\n';
-            break;
-        }
-        default:
-            break;
-        }
-    }
 }
 int main()
 {
