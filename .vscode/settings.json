@@ -102,5 +102,6 @@
     "cph.general.saveLocation": "",
     "cph.general.defaultLanguage": "cpp",
     "cph.general.firstTime": false,
-    "cph.general.useShortCodeForcesName": true
+    "cph.general.useShortCodeForcesName": true,
+    "cph.general.autoShowJudge": false
 }
