@@ -11,24 +11,19 @@ void solve()
         cin >> p[i];
     }
     int ans = 0;
-
+    vector<long long> v(4 * n + 100);
     for (int k = 1; k <= n; ++k)
     {
-        unordered_map<int, int> m1, m2;
         int tmp = 0;
-        for (int i = 1; i * k <= n; i++)
+        for (int i = 1; i * k <= 2*n && i <= n; i++)
         {
-            if (p[i] - k * i > 0)
-                m1[p[i] - k * i]++;
-            else if (p[i] - k * i < 0)
-                m2[k * i - p[i]]++;
-            else
-                tmp++;
+            int x = p[i] - k * i + 2 * n;
+            ans += v[x];
+            v[k * i - p[i] + 2 * n]++;
         }
-        ans += tmp * (tmp - 1) / 2;
-        for (const auto &[key, value] : m1)
+        for(int i = 1; i * k <= 2*n && i <= n; i++)
         {
-            ans += value * m2[key];
+            v[k * i - p[i] + 2 * n] --;
         }
     }
     cout << ans << '\n';
