@@ -1,3 +1,5 @@
-.cph
-exe
-.vscode
+.cph/
+
+exe/
+
+.vscode/
