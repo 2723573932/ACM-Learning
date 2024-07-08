@@ -4,32 +4,26 @@ void solve()
 {
     int n;
     cin >> n;
-    if (n == 1)
+    vector<vector<int>> mp(n, vector<int>(n, 0));
+    if (n & 1)
     {
-        cout << "1\n";
-        return;
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+            {
+                mp[i][j] = (i + j) % n + 1;
+            }
     }
-    if (n == 2)
+    else
     {
-        cout << "-1\n";
-        return;
-    }
-    int mp[n][n];
-    int x = 0, y = 0;
-    for (x = 1; x < n; x++)
-    {
-        if (gcd(x, n) == 1)
-            for (y = 1; y <= x; y++)
-                if (gcd(y, n) == 1 && gcd(x + y, n) == 1 && gcd(x - y, n) == 1)
-                    break;
-        if (gcd(y, n) == 1 && gcd(x + y, n) == 1 && gcd(x - y, n) == 1)
-            break;
-    }
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
+        for (int i = 0; i < n - 1; i++)
+            for (int j = 0; j < n - 1; j++)
+            {
+                mp[i][j] = (i + j) % (n - 1) + 1;
+            }
+        for(int i=0;i<n;i++)
         {
-            mp[i][j] = (x*i+y*j) % n ;
+            if()
+            mp[i][n-1]=mp[n-1][(i+1)%n]=mp[i][(i+1)%n];
         }
     }
     for (int i = 0; i < n; i++)
@@ -38,7 +32,7 @@ void solve()
         {
             cout << mp[i][j] << " ";
         }
-        cout << "\n";
+        cout << '\n';
     }
 }
 
