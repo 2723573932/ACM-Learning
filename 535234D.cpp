@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-int dp[1007];
+int dp[1007][2 * (int)1e4+ 13];
+constexpr long long mod = 998244353;
 void solve()
 {
     int n;
@@ -11,12 +12,20 @@ void solve()
         cin >> a[i];
         a[i] += 100;
     }
-    long long ans=0;
-    for (int i = 1;i<=n;i++)
+    long long ans = 0;
+    dp[0][100] = 1;
+    for (int i = 1; i <= n; i++)
     {
-        
+        for (int j = a[i]; j >=0; j--)
+        {
+            dp[i][j] = dp[i - 1][j];
+            if (j - a[i] >= 0)
+                dp[i][j] = (dp[i][j] + dp[i - 1][j - a[i]]) % mod;
+        }
+        dp[i][a[i]]++;
+        ans = (ans + dp[i][100]) % mod;
     }
-    cout<<ans;
+    cout << ans;
 }
 int main()
 {
