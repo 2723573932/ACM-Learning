@@ -1,3 +1,4 @@
+//记得开long long
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
