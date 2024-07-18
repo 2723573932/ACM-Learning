@@ -1,12 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
+// #define int long long
 class DSU
 {
-private:
-    vector<int> parent, rank;
-
 public:
+    vector<int> parent, rank;
     DSU(int n) : parent(n + 1), rank(n + 1)
     {
         iota(parent.begin(), parent.end(), 0);
@@ -39,48 +37,40 @@ void solve()
     int n, m, q;
     cin >> n >> m >> q;
     map<pair<int, int>, int> mp;
-    vector<vector<int>> mps(n + 1);
+    vector<vector<pair<int, int>>> mps(n + 1);
     for (int i = 0; i < m; i++)
     {
         int u, v, w;
         cin >> u >> v >> w;
+        if (u > v)
+            swap(u, v);
         mp[{u, v}] = w;
-        mp[{v, u}] = w;
-        mps[u].emplace_back(v);
-        mps[v].emplace_back(u);
+        mps[u].emplace_back(v, w);
     }
+    DSU dsu(n);
     while (q--)
     {
         int k;
         long long ans = 0;
         cin >> k;
-        set<int> lst;
+        unordered_set<int> lst(k);
         vector<tuple<int, int, int>> edges;
         for (int i = 0; i < k; i++)
         {
             int tmp;
             cin >> tmp;
+            dsu.parent[tmp] = tmp;
+            dsu.rank[tmp] = 0;
             lst.insert(tmp);
         }
-        if (k * k <= n)
+        if (k <= 300)
         {
             for (const auto &x : lst)
             {
                 for (const auto &y : lst)
                 {
-                    if (x != y && mp.count({x, y}))
+                    if (mp.count({x, y}))
                         edges.emplace_back(mp[{x, y}], x, y);
-                }
-            }
-            DSU dsu(n);
-            sort(edges.begin(), edges.end());
-            for (const auto &[w, u, v] : edges)
-            {
-                if (!dsu.connected(u, v))
-                {
-                    dsu.unite(u, v);
-                    ans += w;
-                    k--;
                 }
             }
         }
@@ -88,22 +78,24 @@ void solve()
         {
             for (const auto &x : lst)
             {
-                for (const auto &y : mps[x])
+                for (const auto &[y, w] : mps[x])
                 {
-                    if (lst.count(y) && mp.count({x, y}))
-                        edges.emplace_back(mp[{x, y}], x, y);
+                    if (lst.count(y))
+                        edges.emplace_back(w, x, y);
                 }
             }
-            DSU dsu(n);
-            sort(edges.begin(), edges.end());
-            for (const auto &[w, u, v] : edges)
+        }
+        sort(edges.begin(), edges.end(), [](const auto &a, const auto &b)
+             { return get<0>(a) < get<0>(b); });
+        for (const auto &[w, u, v] : edges)
+        {
+            if (!dsu.connected(u, v))
             {
-                if (!dsu.connected(u, v))
-                {
-                    dsu.unite(u, v);
-                    ans += w;
-                    k--;
-                }
+                dsu.unite(u, v);
+                ans += w;
+                k--;
+                if (k == 1)
+                    break;
             }
         }
         if (k != 1)
@@ -115,6 +107,7 @@ signed main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
+    cout.tie(0);
     int tt = 1;
     // cin >> tt;
     while (tt--)
