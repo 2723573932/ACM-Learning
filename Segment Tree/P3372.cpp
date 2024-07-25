@@ -46,8 +46,9 @@ public:
     }
     void update(long long node, long long l, long long r, long long x, long long y, long long k)
     {
-        if (l == r)
-            segm_tree[node].val += k;
+        propagate(node,l,r);
+        if (x<=l&& r<=y)
+            segm_tree[node].lazy += k;
         else
         {
             long long mid = (l + r) / 2;
@@ -55,11 +56,14 @@ public:
                 update(2 * node, l, mid, x, y, k);
             if (y >= mid + 1)
                 update(2 * node + 1, mid + 1, r, x, y, k);
+            propagate(node*2,l,mid);
+            propagate(node*2+1,mid+1,r);
             rec(node);
         }
     }
     long long query(long long node, long long l, long long r, long long x, long long y)
     {
+        propagate(node,l,r);
         if (x <= l and r <= y)
             return segm_tree[node].val;
         else
