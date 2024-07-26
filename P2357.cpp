@@ -1,24 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-class BinaryIndexedTree
-{
-private:
-    vector<int> tree;
-    vector<int> sum1;
-    vector<int> sum2;
-    int n;
-
-public:
-    BinaryIndexedTree(int n) : tree(n + 1), sum1(n + 1), sum2(n + 1),n(n)
-    {
-        for (int i = 1; i <= n; i++)
+vector<int> lst;
+class SGT{
+    private:
+        struct Segment
         {
-            cin >> tree[i];
-            sum1[i] = sum1[i - 1] + tree[i];
-            sum2[i] = sum2[i - 1] + tree[i] * i;
+            int val;
+            int add;
+        };
+        vector<Segment> st;
+    public:
+        SGT(int n):st(n<<2){};
+        void cal(int node)
+        {
+            st[node].val=st[node*2].val+st[node*2+1].val;
         }
-    }
+        void build(int node,int l,int r)
+        {
+            if(l==r)
+                st[node].val=lst[l];
+            else{
+                int mid=(l+r)/2;
+                build(node,l,mid);
+                build(node,mid+1,r);
+                cal(node);
+            }
+        }
+        void pushdown(int node,int l,int r)
+        {
+            st[node].val+=st[node].add;
+            if(l<r)
+            {
+                st[node*2].add+=st[node].add;
+                st[node*2+1].add+=st[node].add;
+            }
+            st[node].add=0;
+        }
+        void update(int node,int l,int r,int x,int y)
+        {
+            pushdown(node,l,r);
+            if(l==r)
+        }
 };
 void solve()
 {

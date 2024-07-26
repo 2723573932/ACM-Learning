@@ -1,3 +1,4 @@
+//with multitags
 #include <bits/stdc++.h>
 using namespace std;
 long long mod;
@@ -12,6 +13,7 @@ private:
         long long mul = 1;
     };
     vector<segment> ST;
+
 public:
     TREE(long long n) : ST((n + 1) << 2) {};
     void cal(long long node)
@@ -32,7 +34,7 @@ public:
     }
     void pushdown(long long node, long long l, long long r)
     {
-        ST[node].val = (ST[node].val * ST[node].mul % mod + ST[node].add) % mod;
+        ST[node].val = (ST[node].val * ST[node].mul % mod + ST[node].add * (r - l + 1)) % mod;
         if (l < r)
         {
             // ST[node * 2].val = (ST[node * 2].val * ST[node].mul) % mod;
@@ -73,7 +75,10 @@ public:
     {
         pushdown(node, l, r);
         if (x <= l && r <= y)
+        {
             ST[node].mul = k * ST[node].mul % mod;
+            ST[node].add = k * ST[node].add % mod;
+        }
         else
         {
             long long mid = (l + r) / 2;
