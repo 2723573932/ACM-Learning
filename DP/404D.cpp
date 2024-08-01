@@ -9,7 +9,7 @@ void solve()
     cin >> s;
     int n = s.size();
     s = " " + s;
-    dp[0][0] = dp[0][1]  = 1;
+    dp[0][0] = dp[0][1] = 1;
     for (int i = 1; i <= n; i++)
     {
         if (s[i] == '0')
@@ -19,7 +19,7 @@ void solve()
         else if (s[i] == '1')
         {
             dp[i][0] = dp[i - 1][2] % mod;
-            dp[i][1] = (dp[i - 1][0] + dp[i - 1][2]) % mod;
+            dp[i][1] = (dp[i - 1][0]) % mod;
         }
         else if (s[i] == '2')
         {
@@ -36,7 +36,7 @@ void solve()
             dp[i][2] = (dp[i - 1][2] + dp[i - 1][1]) % mod;
         }
     }
-    cout << (dp[n][0] + dp[n][2]) % mod << "\n";
+        cout << (dp[n][0]+dp[n][2])%mod;
 }
 int main()
 {

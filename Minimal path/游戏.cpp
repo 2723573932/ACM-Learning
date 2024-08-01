@@ -19,8 +19,8 @@ void solve()
     }
     priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<pair<ll, ll>>> pq;
     pq.push({0, 1});
-    ll ans1 = INT_MAX, ans2 = INT_MAX;
-    vector<ll> dist(n + 1, INT_MAX);
+    ll ans1 = 0x3f3f3f3f3f, ans2 = 0x3f3f3f3f3f;
+    vector<ll> dist(n + 1, 0x3f3f3f3f3f);
     dist[1] = 0;
     while (!pq.empty())
     {
@@ -33,9 +33,9 @@ void solve()
             if (d == 1)
             {
 
-                if (dist[v] > dist[d] + w)
+                if (dist[v] > dist[u] + w)
                 {
-                    dist[v] = dist[d] + w;
+                    dist[v] = dist[u] + w;
                     pq.push({dist[v], v});
                 }
             }
@@ -44,7 +44,7 @@ void solve()
     ans1 = dist[n];
     ans2 = dist[k];
     pq.push({0, k});
-    fill(dist.begin(), dist.end(), INT_MAX);
+    fill(dist.begin(), dist.end(), 0x3f3f3f3f3f);
     dist[k] = 0;
     while (!pq.empty())
     {
@@ -54,15 +54,15 @@ void solve()
             continue;
         for (const auto &[v, w, d] : e[u])
         {
-            if (dist[v] > dist[d] + w)
+            if (dist[v] > dist[u] + w)
             {
-                dist[v] = dist[d] + w;
+                dist[v] = dist[u] + w;
                 pq.push({dist[v], v});
             }
         }
     }
     ans2 += dist[n];
-    cout << (min(ans1, ans2) < INT_MAX ? min(ans1, ans2) : -1) << '\n';
+    cout << (min(ans1, ans2) < 0x3f3f3f3f3f ? min(ans1, ans2) : -1) << '\n';
 }
 main()
 {
