@@ -1,36 +1,33 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int N = 1e6;
-long long dp[N + 7][2];
-long long lst[N + 7];
+int dp[(int)1e6 + 7][2];
+int f[(int)1e6 + 7];
 void solve()
 {
     int n;
-    long long ans = 0;
     cin >> n;
-    for (int i = 0; i < n; i++)
+    while (n--)
     {
         int x;
         cin >> x;
-        lst[x]++;
+        f[x]++;
     }
-    for (int i = 1; i <= N; i++)
+    for (int i = 1; i <= 1e6; i++)
     {
         if (i & 1)
         {
+            dp[i][1] = f[i];
             dp[i][0] = 0;
-            dp[i][1] = lst[i];
         }
         else
         {
-            dp[i][0] = dp[i / 2][1];
-            dp[i][1] = min(dp[i / 2][1], dp[i / 2][0]) + lst[i];
+            dp[i][1] = min(dp[i / 2][1], dp[i / 2][0]) + f[i];
+            dp[i][0] = dp[i /2][1];
         }
     }
-    for (int i = N; 2 * i > N; i--)
-    {
+    int ans = 0;
+    for (int i = 5e5 + 1; i <= 1e6; i++)
         ans += min(dp[i][0], dp[i][1]);
-    }
     cout << ans;
 }
 int main()
@@ -38,7 +35,7 @@ int main()
     ios::sync_with_stdio(0);
     cin.tie(0);
     int tt = 1;
-    // cin>>tt;
+    // cin >> tt;
     while (tt--)
         solve();
     return 0;
