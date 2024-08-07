@@ -46,6 +46,7 @@ void solve()
             va.push_back((ui(1) << cnt) * (4 * a + 3) * (4 * a + 4));
             cnt += 2;
             va.push_back((ui(1) << cnt) * (a + 1));
+            a++;
         }
         else
         {
@@ -54,6 +55,7 @@ void solve()
             va.push_back((ui(1) << cnt) * a * (2 * a + 1));
             va.push_back((ui(1) << cnt) * (a + 1) * (2 * a + 1));
             va.push_back((ui(1) << cnt) * (a + 1));
+            a++;
         }
     }
     cnt = 0;
@@ -78,6 +80,7 @@ void solve()
             vb.push_front((ui(1) << cnt) * (4 * b + 3) * (4 * b + 4));
             cnt += 2;
             vb.push_front((ui(1) << cnt) * (b + 1));
+            b++;
         }
         else
         {
@@ -86,6 +89,7 @@ void solve()
             vb.push_front((ui(1) << cnt) * b * (2 * b + 1));
             vb.push_front((ui(1) << cnt) * (b + 1) * (2 * b + 1));
             vb.push_front((ui(1) << cnt) * (b + 1));
+            b++;
         }
     }
     if (va.back() < vb[0])
@@ -101,7 +105,7 @@ void solve()
         ui t = va.back() / vb[0];
         va.push_back(va.back() * 3);
         vb.push_front(vb[0] * 3);
-        while (t>>=1)
+        while (t >>= 1)
             vb.push_front(vb[0] * 2);
     }
     else
@@ -125,6 +129,8 @@ int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
+    // freopen("C:\\Users\\acm\\Desktop\\F-Teleportation\\1.in ", "r", stdin);
+    // freopen("C:\\Users\\acm\\Desktop\\out.out", "w", stdout);
     int tt = 1;
     cin >> tt;
     while (tt--)
