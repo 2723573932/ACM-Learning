@@ -1,38 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int mod = 10007;
-const int N = 100007;
-vector<int> lst(N);
+const long long mod = 10007;
+const long long N = 100007;
+vector<long long> lst(N);
 class sgt
 {
 private:
     struct seg
     {
-        int val, val2, val3, add, mul = 1, set;
+        long long val, val2, val3, add, mul = 1, set;
     };
     vector<seg> st;
 
 public:
     sgt() : st(N << 2) {};
-    void cal(int node)
+    void cal(long long node)
     {
         st[node].val = (st[node * 2].val + st[node * 2 + 1].val) % mod;
         st[node].val2 = (st[node * 2].val2 + st[node * 2 + 1].val2) % mod;
         st[node].val3 = (st[node * 2].val3 + st[node * 2 + 1].val3) % mod;
     }
-    void build(int node, int l, int r)
+    void build(long long node, long long l, long long r)
     {
         if (l == r)
             st[node].val = lst[l];
         else
         {
-            int mid = (l + r) >> 1;
+            long long mid = (l + r) >> 1;
             build(node * 2, l, mid);
             build(node * 2 + 1, mid + 1, r);
             cal(node);
         }
     }
-    void pushdown(int node, int l, int r)
+    void pushdown(long long node, long long l, long long r)
     {
         if (st[node].set)
         {
@@ -56,8 +56,8 @@ public:
                 st[node * 2].mul = st[node * 2 + 1].mul = 1;
                 st[node * 2].add = st[node * 2 + 1].add = 0;
             }
-            else
-            {
+            // else
+            // {
                 st[node * 2].mul = (st[node * 2].mul * st[node].mul) % mod;
                 st[node * 2].add = (st[node * 2].add * st[node].mul + st[node].add) % mod;
                 // if (st[node * 2].set)
@@ -67,13 +67,13 @@ public:
                 st[node * 2 + 1].add = (st[node * 2 + 1].add * st[node].mul + st[node].add) % mod;
                 // if (st[node * 2 + 1].set)
                 //     st[node * 2 + 1].set = (st[node * 2 + 1].set * st[node].mul + st[node].add) % mod;
-            }
+            // }
         }
         st[node].add = 0;
         st[node].mul = 1;
         st[node].set = 0;
     }
-    void add(int node, int l, int r, int x, int y, int k)
+    void add(long long node, long long l, long long r, long long x, long long y, long long k)
     {
         pushdown(node, l, r);
         if (x <= l && r <= y)
@@ -82,7 +82,7 @@ public:
         }
         else
         {
-            int mid = (l + r) >> 1;
+            long long mid = (l + r) >> 1;
             if (x <= mid)
                 add(node * 2, l, mid, x, y, k);
             if (y > mid)
@@ -92,7 +92,7 @@ public:
             cal(node);
         }
     }
-    void mul(int node, int l, int r, int x, int y, int k)
+    void mul(long long node, long long l, long long r, long long x, long long y, long long k)
     {
         pushdown(node, l, r);
         if (x <= l && r <= y)
@@ -102,7 +102,7 @@ public:
         }
         else
         {
-            int mid = (l + r) >> 1;
+            long long mid = (l + r) >> 1;
             if (x <= mid)
                 mul(node * 2, l, mid, x, y, k);
             if (mid + 1 <= y)
@@ -112,7 +112,7 @@ public:
             cal(node);
         }
     }
-    void set(int node, int l, int r, int x, int y, int k)
+    void set(long long node, long long l, long long r, long long x, long long y, long long k)
     {
         pushdown(node, l, r);
         if (x <= l && r <= y)
@@ -123,7 +123,7 @@ public:
         }
         else
         {
-            int mid = (l + r) >> 1;
+            long long mid = (l + r) >> 1;
             if (x <= mid)
                 set(node * 2, l, mid, x, y, k);
             if (mid + 1 <= y)
@@ -133,7 +133,7 @@ public:
             cal(node);
         }
     }
-    int query(int node, int l, int r, int x, int y, int p)
+    long long query(long long node, long long l, long long r, long long x, long long y, long long p)
     {
         pushdown(node, l, r);
         if (x <= l && r <= y)
@@ -145,8 +145,8 @@ public:
             else
                 return st[node].val3;
         }
-        int mid = (l + r) >> 1;
-        int res = 0;
+        long long mid = (l + r) >> 1;
+        long long res = 0;
         if (x <= mid)
             res = (res + query(node * 2, l, mid, x, y, p)) % mod;
         if (mid + 1 <= y)
@@ -159,11 +159,11 @@ public:
     }
 } tree;
 
-void solve(int n, int m)
+void solve(long long n, long long m)
 {
     while (m--)
     {
-        int op, x, y, k;
+        long long op, x, y, k;
         cin >> op >> x >> y >> k;
         if (op == 1)
             tree.add(1, 1, n, x, y, k);
@@ -181,7 +181,7 @@ int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
-    int n, m;
+    long long n, m;
     while (cin >> n >> m && n && m)
     {
         solve(n, m);
