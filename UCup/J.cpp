@@ -62,7 +62,7 @@ void solve()
                     a[j].erase(a[j].begin()+fy);
                     a[j].erase(a[j].begin()+fx);
                 }
-                an+=(1<<j);
+                an+=(1LL<<j);
             }
         }
         ans1.push_back(an);
