@@ -6,7 +6,7 @@ private:
     vector<int> st;
 
 public:
-    segtree(int n) : st(4 * n, 0) {};
+    segtree() : st(1e7, 0) {};
     void cal(int node)
     {
         st[node] = st[node * 2] + st[node * 2 + 1];
@@ -24,9 +24,10 @@ public:
     }
     void update(int node, int l, int r, int pos, int k)
     {
+        st[node]=max(st[node]+k,0);
         if (l == r)
         {
-            st[node] = k;
+            st[node] = max(k,0);
             return;
         }
         int mid = (l + r) / 2;
@@ -35,18 +36,59 @@ public:
         else
             update(node * 2 + 1, mid + 1, r, pos, k);
     }
-    int query(int node, int l, int r, int ql, int qr)
+    int query(int node, int l, int r, int x, int y)
     {
-        if (l > qr || r < ql)
-            return 0;
-        if (l >= ql && r <= qr)
+        if (l <= x && y <= r)
             return st[node];
         int mid = (l + r) / 2;
-        return query(node * 2, l, mid, ql, qr) + query(node * 2 + 1, mid + 1, r, ql, qr);
+        int ret = 0;
+        if (x <= mid)
+            ret += query(node * 2, l, mid, x, y);
+        if (y > mid)
+            ret += query(node * 2 + 1, mid + 1, r, x, y);
+        return ret;
     }
-};
+    void clear()
+    {
+        st.assign(st.size(), 0);
+    }
+} sgt;
+vector<int> lst;
+constexpr int maxn = 2e6 + 3;
 void solve()
 {
+    sgt.clear();
+    lst.assign(1e7, 0);
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++)
+    {
+        int x;
+        cin >> x;
+        lst[x] = 1;
+    }
+    sgt.build(1, 1, n, lst);
+    int m;
+    cin >> m;
+    while(m--)
+    {
+        char op;
+        int x;
+        cin >> op >> x;
+        if(op=='+')
+            sgt.update(1, 1, n, x, 1);
+        else if(op=='-')
+            sgt.update(1, 1, n, x, -1);
+        else 
+            for(int i=1;i<=2e6;i++)
+            {
+                if(sgt.query(1,1,n,i,i+x-1)==0)
+                {
+                    cout<<i<<endl;
+                    break;
+                }
+            }
+    }
 }
 int main()
 {
