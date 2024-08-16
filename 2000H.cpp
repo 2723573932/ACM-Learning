@@ -21,13 +21,13 @@ public:
         int mid = (l + r) / 2;
         build(node * 2, l, mid, lst);
         build(node * 2 + 1, mid + 1, r, lst);
+        cal(node);
     }
     void update(int node, int l, int r, int pos, int k)
     {
-        st[node]=max(st[node]+k,0);
         if (l == r)
         {
-            st[node] = max(k,0);
+            st[node] = max(st[node] + k, 0);
             return;
         }
         int mid = (l + r) / 2;
@@ -35,10 +35,11 @@ public:
             update(node * 2, l, mid, pos, k);
         else
             update(node * 2 + 1, mid + 1, r, pos, k);
+        cal(node);
     }
     int query(int node, int l, int r, int x, int y)
     {
-        if (l <= x && y <= r)
+        if (x <= l && r <= y || st[node] == 0)
             return st[node];
         int mid = (l + r) / 2;
         int ret = 0;
@@ -57,8 +58,8 @@ vector<int> lst;
 constexpr int maxn = 2e6 + 3;
 void solve()
 {
-    sgt.clear();
-    lst.assign(1e7, 0);
+    // sgt.clear();
+    lst.assign(maxn, 0);
     int n;
     cin >> n;
     for (int i = 1; i <= n; i++)
@@ -67,28 +68,33 @@ void solve()
         cin >> x;
         lst[x] = 1;
     }
-    sgt.build(1, 1, n, lst);
+    sgt.build(1, 1, maxn, lst);
     int m;
     cin >> m;
-    while(m--)
+    while (m--)
     {
         char op;
         int x;
         cin >> op >> x;
-        if(op=='+')
-            sgt.update(1, 1, n, x, 1);
-        else if(op=='-')
-            sgt.update(1, 1, n, x, -1);
-        else 
-            for(int i=1;i<=2e6;i++)
+        if (op == '+')
+            sgt.update(1, 1, maxn, x, 1);
+        else if (op == '-')
+            sgt.update(1, 1, maxn, x, -1);
+        else
+        {
+            int l =x, r = maxn;
+            while (l < r)
             {
-                if(sgt.query(1,1,n,i,i+x-1)==0)
-                {
-                    cout<<i<<endl;
-                    break;
-                }
+                int mid=l+r>>1;
+                if (sgt.query(1, 1, maxn, 1, mid) <=mid-x)
+                    r = mid;
+                else
+                    l = mid + 1;
             }
+            cout<<r-x+1<<' ';
+        }
     }
+    cout << '\n';
 }
 int main()
 {
