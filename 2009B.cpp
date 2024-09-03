@@ -3,12 +3,21 @@ using namespace std;
 
 void solve()
 {
-    int a, b;
-    cin >> a >> b;
-    if(a%2==0&&(b%2==0||(a!=0&&b%2==1)))
-    cout<<"YES\n";
-    else
-    cout<<"NO\n";
+    int n;
+    cin>>n;
+    stack<int> st;
+    while(n--)
+    {
+        string s;
+        cin>>s;
+        st.push(s.find('#')+1);
+    }
+    while(st.size())
+    {
+        cout<<st.top()<<' ';
+        st.pop();
+    }
+    cout<<'\n';
 }
 int main()
 {
