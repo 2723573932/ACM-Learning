@@ -1,11 +1,8 @@
-// 最大流
-#include <bits/stdc++.h>
-using namespace std;
 // 模板
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-constexpr ll V = 5005, E = 50005, inf = 0x3f3f3f3f3f3f;
+constexpr ll V = 1e3 + 3, E = 1e6 + 3, inf = 0x3f3f3f3f3f3f;
 struct edge
 {
 public:
@@ -13,15 +10,14 @@ public:
     ll w;
 };
 int cnt = 0, head[V];
-int maxn = 2007;
+int n, m;
 vector<edge> node(E);
 inline void add(int u, int v, ll w)
 {
     node[cnt].to = v;
     node[cnt].w = w;
     node[cnt].next = head[u];
-    head[u] = cnt;
-    ++cnt;
+    head[u] = cnt++;
 }
 int s, t, deep[V], gap[V], cur[V];
 queue<int> que;
@@ -29,7 +25,7 @@ ll sum = 0;
 inline void init()
 {
     memset(deep, -1, V * sizeof(int));
-    memcpy(cur, head, (maxn + 1) * sizeof(int));
+    memcpy(cur, head, (n + 1) * sizeof(int));
 }
 inline void bfs()
 {
@@ -78,7 +74,7 @@ ll dfs(int u, ll flow)
     {
         --gap[deep[u]];
         if (!gap[deep[u]])
-            deep[s] = maxn + 1;
+            deep[s] = n + 1;
         ++gap[++deep[u]];
     }
     return used;
@@ -87,79 +83,30 @@ ll ISAP()
 {
     init();
     bfs();
-    while (deep[s] < maxn)
+    while (deep[s] < n)
     {
         sum += dfs(s, inf);
-        memcpy(cur, head, (maxn + 1) * sizeof(int));
+        memcpy(cur, head, (n + 1) * sizeof(int));
     }
     return sum;
 }
-void solve()
-{
-    memset(head, -1, V * sizeof(int));
-    s = 1, t = maxn;
-    int n, m, f = 1;
-    cin >> n >> m;
-    vector<int> a(n + 1);
-    int maxs = 0;
-    ll sum = 0;
-    for (int i = 1; i <= n; ++i)
-    {
-        int x, y;
-        cin >> x >> y;
-        a[i] = x - y;
-        if (a[i] < 0)
-        {
-            f = 0;
-        }
-    }
-    for (int i = 1; i <= m; i++)
-    {
-        int x, y, w;
-        cin >> x >> y >> w;
-        if (x == 1 || y == 1)
-        {
-            maxs += w;
-        }
-        
-            sum += w;
-            add(1, n + i, inf);
-            add(n + i, 1, 0);
-            add(n + i, x, w);
-            add(x, n + i, 0);
-            add(n + i, y, w);
-            add(y, n + i, 0);
-    }
-    maxs = min(maxs, a[1]) - 1;
-    if (maxs < 0)
-        f = 0;
-    for (int i = 2; i <= n; i++)
-    {
-        add(i, t, min(a[i], maxs));
-        add(t, i, 0);
-    }
-    int ans = ISAP();
-    if (!f || ans < sum)
-    {
-        cout << "NO" << endl;
-    }
-    else
-    {
-        cout << "YES" << endl;
-    }
-}
 int main()
 {
-#if !LOCAL
     ios::sync_with_stdio(0);
     cin.tie(0);
-#endif
-    int tt = 1;
-    // cin >> tt;
-    while (tt--)
-        solve();
-#if LOCAL
-    system("pause");
-#endif
+    memset(head, -1, V * sizeof(int));
+    cin >> m;
+    n=200;
+    s = (int)'A';
+    t = (int)'Z';
+    for (int i = 0; i < m; i++)
+    {
+        char u, v;
+        ll w;
+        cin >> u >> v >> w;
+        add((int)u, (int)v, w);
+        add((int)v, (int)u, 0);
+    }
+    cout << ISAP();
     return 0;
 }
