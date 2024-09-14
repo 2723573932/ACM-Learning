@@ -1,11 +1,8 @@
-// 最大流
-#include <bits/stdc++.h>
-using namespace std;
 // 模板
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-constexpr ll V = 5005, E = 50005, inf = 0x3f3f3f3f3f3f;
+constexpr ll V = 5e3 + 3, E = 1e6 + 3, inf = 0x3f3f3f3f3f3f;
 struct edge
 {
 public:
@@ -13,15 +10,14 @@ public:
     ll w;
 };
 int cnt = 0, head[V];
-int maxn = 2007;
+int maxn;
 vector<edge> node(E);
 inline void add(int u, int v, ll w)
 {
     node[cnt].to = v;
     node[cnt].w = w;
     node[cnt].next = head[u];
-    head[u] = cnt;
-    ++cnt;
+    head[u] = cnt++;
 }
 int s, t, deep[V], gap[V], cur[V];
 queue<int> que;
@@ -94,26 +90,22 @@ ll ISAP()
     }
     return sum;
 }
-void solve()
+int main()
 {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
     memset(head, -1, V * sizeof(int));
-    s = 1, t = maxn;
     int n, m, f = 1;
     cin >> n >> m;
-    vector<int> a(n + 1);
-    int maxs = 0;
-    ll sum = 0;
+    maxn = n + m + 2;
+    s = n + m + 1, t = n + m + 2;
+    vector<ll> a(n + 1), v(n + 1);
+    ll maxs = 0, sum = 0;
     for (int i = 1; i <= n; ++i)
     {
-        int x, y;
-        cin >> x >> y;
-        a[i] = x - y;
-        if (a[i] < 0)
-        {
-            f = 0;
-        }
+        cin >> a[i] >> v[i];
     }
-    for (int i = 1; i <= m; i++)
+    for (int i = 1; i <= m; ++i)
     {
         int x, y, w;
         cin >> x >> y >> w;
@@ -121,45 +113,40 @@ void solve()
         {
             maxs += w;
         }
-        
-            sum += w;
-            add(1, n + i, inf);
-            add(n + i, 1, 0);
-            add(n + i, x, w);
-            add(x, n + i, 0);
-            add(n + i, y, w);
-            add(y, n + i, 0);
+        sum += w;
+        add(x, n + i, inf);
+        add(n + i, x, 0);
+        add(y, n + i, inf);
+        add(n + i, y, 0);
+        add(n + i, t, w);
+        add(t, n + i, 0);
     }
-    maxs = min(maxs, a[1]) - 1;
+    maxs = min(maxs + v[1], (ll)a[1]);
     if (maxs < 0)
-        f = 0;
-    for (int i = 2; i <= n; i++)
     {
-        add(i, t, min(a[i], maxs));
-        add(t, i, 0);
+        cout << "NO\n";
+        return 0;
     }
-    int ans = ISAP();
-    if (!f || ans < sum)
+    add(s, 1, maxs - v[1]);
+    add(1, s, 0);
+    for (int i = 2; i <= n; ++i)
     {
-        cout << "NO" << endl;
+        a[i] = min(maxs - 1, a[i]);
+        if (a[i] - v[i] < 0)
+        {
+            cout << "NO\n";
+            return 0;
+        }
+        add(s, i, a[i]-v[i]);
+        add(i, s, 0);
+    }
+    if (ISAP() == sum)
+    {
+        cout << "YES\n";
     }
     else
     {
-        cout << "YES" << endl;
+        cout << "NO\n";
     }
-}
-int main()
-{
-#if !LOCAL
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-#endif
-    int tt = 1;
-    // cin >> tt;
-    while (tt--)
-        solve();
-#if LOCAL
-    system("pause");
-#endif
     return 0;
 }
