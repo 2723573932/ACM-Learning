@@ -5,68 +5,55 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> a(n + 1), b(n + 1);
-    vector<vector<int>> e(n + 1);
-    for (int i = 1; i <= n; i++)
-        cin >> a[i];
-    for (int i = 1; i <= n; i++)
+    vector<int> ans(n);
+    vector<pair<int, int>> a(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i].first;
+        a[i].second = i;
+    }
+    sort(a.begin(), a.end());
+    ans[a[n - 1].second] = 1;
+    vector<int> b(n);
+    set<int> bs;
+    for (int i = 0; i < n; i++)
+    {
         cin >> b[i];
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = i + 1; j <= n; j++)
-        {
-            if (a[i] > a[j] && b[i] > b[j])
-            {
-                e[i].push_back(j);
-            }
-            else if (a[i] < a[j] && b[i] < b[j])
-            {
-                e[j].push_back(i);
-            }
-            else
-            {
-                e[i].push_back(j);
-                e[j].push_back(i);
-            }
-        }
+        bs.insert(b[i]);
     }
-    vector<bool> vis(n + 1, false);
-    auto dfs = [&](auto self, int u, int d) -> bool
+    int maxn = 0, minn = b[a[n - 1].second];
+    bs.erase(b[a[n - 1].second]);
+    for (int i = n - 2; i >=0; i--)
     {
-        if (d == n)
-            return true;
-        for (const auto &v : e[u])
+        maxn = *bs.rbegin();
+        if(maxn >= minn)
         {
-            if (!vis[v])
-            {
-                vis[v] = true;
-                if (self(self, v, d + 1))
-                    return true;
-                vis[v] = false;
-            }
+            ans[a[i].second]=1;
         }
-        return false;
-    };
-    for (int i = 1; i <= n; i++)
-    {
-        fill(vis.begin(), vis.end(), false);
-        vis[i] = true;
-        if (dfs(dfs, i, 1))
-        {
-            cout << "1";
-            continue;
+        else{
+            break;
         }
-        cout << '0';
+        minn = min(b[a[i].second],minn);
+        bs.erase(b[a[i].second]);
     }
-    cout << '\n';
+    for (int i = 0; i < n; i++)
+    {
+        cout << ans[i];
+    }
+    cout <<'\n';
 }
 int main()
 {
+#if !LOCAL
     ios::sync_with_stdio(0);
     cin.tie(0);
+#endif
     int tt = 1;
     cin >> tt;
     while (tt--)
         solve();
+#if LOCAL
+    system("pause");
+#endif
     return 0;
 }
