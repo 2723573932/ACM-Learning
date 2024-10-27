@@ -1,68 +1,49 @@
-// 单源最短路径
+//dijkstra
 #include <bits/stdc++.h>
 using namespace std;
 
-struct EDGE
-{
-    long long w;
-    long long next;
-    long long to;
-} edge[200003];
-long long head[100003], vis[100003], dis[100003];
-long long cnt = 0;
-inline void add_edge(long long from, long long to, long long w)
-{
-    edge[++cnt].to = to;
-    edge[cnt].next = head[from];
-    edge[cnt].w = w;
-    head[from] = cnt;
-}
-priority_queue<pair<long long, long long>, vector<pair<long long, long long>>, greater<pair<long long, long long>>> que;
 void solve()
 {
-    long long n, m, s;
-    cin >> n >> m >> s;
-    long long from, to, w;
-    for (int i = 1; i <= n; i++)
-        dis[i] = INT_MAX;
-    dis[s] = 0;
-    que.push({0, s});
-    while (m--)
+    int n,m,s;
+    cin>>n>>m>>s;
+    vector<vector<pair<int,int>>> g(n+1);
+    for(int i=0;i<m;i++)
     {
-        cin >> from >> to >> w;
-        add_edge(from, to, w);
+        int u,v,w;
+        cin>>u>>v>>w;
+        g[u].push_back({v,w});
     }
-    while (!que.empty())
-    {
-        long long node = que.top().second;
-        que.pop();
-        if (vis[node])
-            continue;
-        vis[node] = 1;
-        for (long long i = head[node]; i; i = edge[i].next)
-        {
-            long long To = edge[i].to;
-//------------------------------------------------------
-            if(dis[To]>dis[node]+edge[i].w)
-            {
-                dis[To]=dis[node]+edge[i].w;
-                if(!vis[To])
-                que.push({dis[To],To});
+    vector<int> dis(n+1,INT_MAX);
+    dis[s]=0;
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+    pq.push({0,s});
+    while(!pq.empty()){
+        auto [d,u]=pq.top();
+        pq.pop();
+        if(d>dis[u])continue;
+        for(auto [v,w]:g[u]){
+            if(dis[v]>dis[u]+w){
+                dis[v]=dis[u]+w;
+                pq.push({dis[v],v});
             }
-//------------------------------------------------------
         }
     }
-    for (long long i = 1; i <= n; i++)
-        cout << dis[i] << ' ';
-    return;
+    for(int i=1;i<=n;i++){
+        cout<<dis[i]<<" ";
+    }   
 }
 int main()
 {
+#if !LOCAL
     ios::sync_with_stdio(0);
     cin.tie(0);
-    long long tt = 1;
-    // cin>>tt;
+#endif
+    int tt = 1;
+    // cin >> tt;
     while (tt--)
         solve();
+#if LOCAL
+    system("pause");
+#endif
     return 0;
 }
