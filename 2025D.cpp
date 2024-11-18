@@ -1,53 +1,50 @@
 #include <bits/stdc++.h>
 using namespace std;
-int dp[2][5003];
-int cnt[5003];
+
 void solve()
 {
     int n, m;
     cin >> n >> m;
-    int ans = 0;
-    for (int i = 1; i <= n; i++)
+    vector<int> dp(m + 1), diff(m + 1);
+    int sum = 0, ans = 0;
+    while (n--)
     {
         int x;
         cin >> x;
-        cnt[i] = cnt[i - 1];
         if (x == 0)
         {
-            cnt[i]++;
-            dp[1][0] = dp[0][0];
-            for (int j = 1; j <= cnt[i]; j++)
-            {
-                dp[1][j] = max(dp[0][j], dp[0][j - 1]);
-            }
+            sum++;
+            for (int i = 1; i <= m; i++)
+                diff[i] += diff[i - 1];
+            for (int i = 0; i <= m; i++)
+                dp[i] += diff[i];
+            for (int i = sum; i > 0; i--)
+                dp[i] = max(dp[i], dp[i - 1]);
+            diff.assign(m + 1, 0);
         }
-        else if (x > 0)
+        else if (sum >= abs(x))
         {
-            for (int j = 0; j < x; j++)
+            if (x > 0)
             {
-                dp[1][j] = dp[0][j];
+                diff[x]++;
             }
-            for (int j = x; j <= cnt[i]; j++)
+            else
             {
-                dp[1][j] = dp[0][j] + 1;
-            }
-        }
-        else
-        {
-            for (int j = 0; j <= cnt[i] + x; j++)
-            {
-                dp[1][j] = dp[0][j] + 1;
-            }
-            for (int j = cnt[i] + x + 1; j <= cnt[i]; j++)
-            {
-                dp[1][j] = dp[0][j];
+                diff[0]++;
+                diff[sum + x + 1]--;
             }
         }
-        swap(dp[0], dp[1]);
     }
-    for (int i = 0; i <= 5000; i++)
-        ans = max(ans, dp[0][i]);
-    cout << ans << '\n';
+    for (int i = 1; i <= m; i++)
+        diff[i] += diff[i - 1];
+    for (int i = 0; i <= m; i++)
+        dp[i] += diff[i];
+    for (int i = sum; i > 0; i--)
+    {
+        dp[i] = max(dp[i], dp[i - 1]);
+        ans = max(ans, dp[i]);
+    }
+    cout << ans;
 }
 int main()
 {
